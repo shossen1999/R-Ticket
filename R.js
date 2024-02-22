@@ -46,8 +46,12 @@ for( let i= 0; i < seatAll.length; i++ ){
         console.log("seat count", reservedSeats)
        
          bookedSeatAll.innerText = reservedSeats;
-    } else  {alert('Sorry!No more than 4.');}
-    }
+    }  else  {alert('Sorry!No more than 4.');}
+}
+else {
+    alert('Seat is selected!');
+}
+seatPos.removeEventListener('click',arguments.callee); 
 });
 }
 
@@ -86,6 +90,40 @@ nextButton.addEventListener('click', function(event) {
 
 
 // formation end
+document.getElementById('couponBtn').addEventListener('click', applyCoupon);
+
+function applyCoupon() {
+    const couponField = document.getElementById('coupon');
+    const couponValue = couponField.value;
+    const discountElement = document.getElementById('discount-price');
+    const totalElement = document.getElementById('total');
+
+    if (totalAmount >= 550) {
+        let discountPercentage = 0;
+        if (couponValue === "NEW15") {
+            discountPercentage = 0.15;
+        } else if (couponValue === "Couple 20") {
+            discountPercentage = 0.20;
+        } else {
+            console.log("Invalid Coupon");
+            return;
+        }
+
+        const discountAmount = totalAmount * discountPercentage;
+        const remainingTotal = totalAmount - discountAmount;
+
+        document.getElementById('couponBtn').classList.add("hidden");
+        couponField.classList.add("hidden");
+        discountElement.innerText = "BDT " + discountAmount;
+        totalElement.innerText = "BDT " + remainingTotal;
+        couponField.value = "";
+    } else {
+        alert('Please Select Seat!');
+    }
+}
+
+
+
 
 const modalBtn = document.getElementById('next-btn');
 modalBtn.addEventListener('click', function(event) {
